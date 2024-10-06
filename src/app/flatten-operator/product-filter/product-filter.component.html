@@ -1,0 +1,28 @@
+<div>
+  <div class="flex gap-2">
+    @for (item of requests; track item.delay; let i = $index) {
+      <mat-chip-option (click)="filter(item)" [selected]="isSelected(item)">Condition {{ i + 1 }}
+        (delay {{ item.delay | number }}ms)
+      </mat-chip-option>
+    }
+  </div>
+  <div class="my-3">Order of user click: {{ orderOfUserClick() }}</div>
+  <div class="mt-4">
+    <h6>Response</h6>
+    <div class="mb-3">
+      {{ strategy() === 'concat' ?
+      'The response will have the same order as the user click' :
+      'The response will not have the same order as the user click' }}
+    </div>
+    @for (res of response(); track res; let i = $index) {
+      <mat-expansion-panel [expanded]="true">
+        <mat-expansion-panel-header>
+          <mat-panel-title>{{ i + 1 }}. Request with delay {{ res.delay | number }}ms</mat-panel-title>
+        </mat-expansion-panel-header>
+        @for (prod of res.products; track prod) {
+          <mat-list-item>{{ prod }}</mat-list-item>
+        }
+      </mat-expansion-panel>
+    }
+  </div>
+</div>
